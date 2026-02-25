@@ -1,0 +1,639 @@
+{
+  "project_metadata": {
+    "project_name": "gyanguru",
+    "project_category": "Education",
+    "description": "An AI-powered Machine Learning learning platform that provides multi-format educational content including text explanations, code generation, audio learning, and visual diagrams.",
+    "core_purpose": "Help users learn Machine Learning through personalized AI-generated content in multiple formats",
+    "target_audience": "Students",
+    "key_features": [
+      "AI-powered text explanations with difficulty levels",
+      "Automated Python ML code generation",
+      "Text-to-speech audio learning",
+      "AI-generated visual diagrams and flowcharts",
+      "Multi-level learning (Beginner/Intermediate/Advanced)",
+      "Learning history tracking",
+      "Export capabilities for all content formats"
+    ]
+  },
+  "frontend": {
+    "pages": [
+      {
+        "page_name": "home",
+        "route": "/",
+        "show_in_nav": true,
+        "nav_order": 1,
+        "purpose": "Landing page showcasing the platform's AI-powered ML learning capabilities",
+        "sections": [
+          "Hero",
+          "Features",
+          "HowItWorks",
+          "CTA"
+        ],
+        "content_notes": "Hero section with dark gradient background, animated text showing 'Learn ML with AI', call-to-action buttons for Sign Up and Login. Features section displaying 4 learning modalities with glassmorphism cards. How It Works with step-by-step process. CTA section encouraging sign-up.",
+        "data_needs": [],
+        "is_protected": false
+      },
+      {
+        "page_name": "signUp",
+        "route": "/signup",
+        "show_in_nav": false,
+        "nav_order": 0,
+        "purpose": "User registration with secure password validation",
+        "sections": [
+          "RegistrationForm",
+          "PasswordRequirements",
+          "RedirectToLogin"
+        ],
+        "content_notes": "Dark-themed registration form with name, email, password, confirm password fields. Real-time password strength indicator showing requirements (8+ chars, uppercase, lowercase, number, special char). Link to login page for existing users. Form validation with error messages.",
+        "data_needs": [
+          "POST /api/auth/signup"
+        ],
+        "is_protected": false
+      },
+      {
+        "page_name": "login",
+        "route": "/login",
+        "show_in_nav": false,
+        "nav_order": 0,
+        "purpose": "User authentication with JWT token generation",
+        "sections": [
+          "LoginForm",
+          "ForgotPassword",
+          "RedirectToSignUp"
+        ],
+        "content_notes": "Dark-themed login form with email and password fields. Remember me checkbox. Forgot password link. Login button with loading state. Link to sign up page for new users. Error handling for invalid credentials.",
+        "data_needs": [
+          "POST /api/auth/login"
+        ],
+        "is_protected": false
+      },
+      {
+        "page_name": "dashboard",
+        "route": "/dashboard",
+        "show_in_nav": true,
+        "nav_order": 2,
+        "purpose": "Main learning hub with access to all AI-powered ML learning modules",
+        "sections": [
+          "StatsOverview",
+          "LearningModules",
+          "RecentHistory"
+        ],
+        "content_notes": "Top stats bar showing 4+ learning modalities, Gemini 2.0 AI model, 3 depth levels, 5+ export formats. Four main glassmorphism cards for Text Explanation, Code Generation, Audio Learning, Image Visualization. Sidebar navigation with Home, Text, Code, Audio, Image, Settings, About. Recent learning history section.",
+        "data_needs": [
+          "GET /api/user/profile",
+          "GET /api/user/history"
+        ],
+        "is_protected": true
+      },
+      {
+        "page_name": "textExplanation",
+        "route": "/learn/text",
+        "show_in_nav": true,
+        "nav_order": 3,
+        "purpose": "AI-generated text explanations for ML topics with difficulty levels",
+        "sections": [
+          "TopicInput",
+          "DifficultySelector",
+          "ExplanationDisplay",
+          "ExportOptions"
+        ],
+        "content_notes": "Input field for ML topic (e.g., 'Linear Regression'). Difficulty selector buttons (Beginner/Intermediate/Advanced). AI response area with structured explanation. Export buttons for PDF/TXT. Save to history functionality. Typing animation effect for AI responses.",
+        "data_needs": [
+          "POST /api/ai/explain"
+        ],
+        "is_protected": true
+      },
+      {
+        "page_name": "codeGeneration",
+        "route": "/learn/code",
+        "show_in_nav": true,
+        "nav_order": 4,
+        "purpose": "Generate executable Python ML code with comments and dependencies",
+        "sections": [
+          "ProblemInput",
+          "CodeRequirements",
+          "GeneratedCode",
+          "DownloadOptions"
+        ],
+        "content_notes": "Text area for describing ML problem or algorithm needed. Code display area with syntax highlighting. Include comments, dependencies list, execution steps. Download code button. Copy to clipboard functionality. Save to history.",
+        "data_needs": [
+          "POST /api/ai/code"
+        ],
+        "is_protected": true
+      },
+      {
+        "page_name": "audioLearning",
+        "route": "/learn/audio",
+        "show_in_nav": true,
+        "nav_order": 5,
+        "purpose": "Convert text explanations to speech for auditory learning",
+        "sections": [
+          "TextInput",
+          "VoiceSelection",
+          "AudioPlayer",
+          "DownloadAudio"
+        ],
+        "content_notes": "Text input area for ML topic or paste explanation. Voice selection dropdown (male/female). Generate audio button. Audio player with play/pause controls. Download audio button. Waveform visualization during playback.",
+        "data_needs": [
+          "POST /api/ai/audio"
+        ],
+        "is_protected": true
+      },
+      {
+        "page_name": "imageVisualization",
+        "route": "/learn/visual",
+        "show_in_nav": true,
+        "nav_order": 6,
+        "purpose": "Generate ML diagrams and flowcharts using AI",
+        "sections": [
+          "ConceptInput",
+          "DiagramType",
+          "GeneratedImage",
+          "DownloadImage"
+        ],
+        "content_notes": "Input field for ML concept or algorithm. Diagram type selector (flowchart/architecture/data-flow). Generated image display area. Download image button (PNG/SVG). Image gallery of previous generations. Zoom functionality for detailed view.",
+        "data_needs": [
+          "POST /api/ai/image"
+        ],
+        "is_protected": true
+      },
+      {
+        "page_name": "settings",
+        "route": "/settings",
+        "show_in_nav": true,
+        "nav_order": 7,
+        "purpose": "User profile and application preferences",
+        "sections": [
+          "ProfileInfo",
+          "Preferences",
+          "AccountActions"
+        ],
+        "content_notes": "Display user name and email. Preferences for default difficulty level, voice selection, export format. Change password option. Delete account functionality. Logout button.",
+        "data_needs": [
+          "GET /api/user/profile",
+          "PUT /api/user/profile"
+        ],
+        "is_protected": true
+      },
+      {
+        "page_name": "",
+        "route": "/about",
+        "show_in_nav": true,
+        "nav_order": 8,
+        "purpose": "Information about GyanGuru platform and its AI capabilities",
+        "sections": [
+          "AboutPlatform",
+          "TeamInfo",
+          "ContactDetails"
+        ],
+        "content_notes": "Platform mission statement. Features overview. Technology stack information. Team members. Contact information. Link to documentation and support.",
+        "data_needs": [],
+        "is_protected": false
+      }
+    ],
+    "navigation": {
+      "type": "sidebar",
+      "position": "left",
+      "style": "vertical",
+      "has_logo": true,
+      "has_search": false,
+      "extra_items": [
+        "Logout"
+      ]
+    },
+    "theme": {
+      "design_dna": "LINEAR_MODERN",
+      "color_scheme": "dark",
+      "primary_color": "#050506",
+      "secondary_color": "#5E6AD2",
+      "accent_color": "#00D4FF",
+      "font_family": "Inter",
+      "font_type": "sans",
+      "border_radius": "lg",
+      "shadow_style": "medium",
+      "animation_style": "energetic",
+      "interaction_style": "bold"
+    },
+    "components": [
+      {
+        "component_name": "sidebar",
+        "type": "shared",
+        "used_on": [
+          "dashboard",
+          "textExplanation",
+          "codeGeneration",
+          "audioLearning",
+          "imageVisualization",
+          "settings",
+          "about"
+        ],
+        "purpose": "Navigation sidebar with menu items and user profile",
+        "props": [
+          "user",
+          "activeRoute",
+          "onLogout"
+        ]
+      },
+      {
+        "component_name": "statsCard",
+        "type": "shared",
+        "used_on": [
+          "dashboard"
+        ],
+        "purpose": "Display key metrics with glassmorphism effect",
+        "props": [
+          "title",
+          "value",
+          "icon",
+          "color"
+        ]
+      },
+      {
+        "component_name": "",
+        "type": "shared",
+        "used_on": [
+          "dashboard"
+        ],
+        "purpose": "Glassmorphism card for learning modules",
+        "props": [
+          "title",
+          "description",
+          "icon",
+          "route",
+          "color"
+        ]
+      },
+      {
+        "component_name": "",
+        "type": "shared",
+        "used_on": [
+          "textExplanation",
+          "codeGeneration",
+          "audioLearning",
+          "imageVisualization"
+        ],
+        "purpose": "Display AI-generated content with typing animation",
+        "props": [
+          "content",
+          "isLoading",
+          "contentType"
+        ]
+      },
+      {
+        "component_name": "",
+        "type": "shared",
+        "used_on": [
+          "textExplanation",
+          "codeGeneration",
+          "audioLearning",
+          "imageVisualization"
+        ],
+        "purpose": "Export functionality for different formats",
+        "props": [
+          "content",
+          "availableFormats",
+          "onExport"
+        ]
+      },
+      {
+        "component_name": "",
+        "type": "shared",
+        "used_on": [
+          "textExplanation",
+          "codeGeneration",
+          "audioLearning",
+          "imageVisualization"
+        ],
+        "purpose": "Loading animation during AI processing",
+        "props": [
+          "size",
+          "color"
+        ]
+      },
+      {
+        "component_name": "",
+        "type": "shared",
+        "used_on": [
+          "signUp",
+          "login",
+          "dashboard",
+          "textExplanation",
+          "codeGeneration",
+          "audioLearning",
+          "imageVisualization",
+          "settings"
+        ],
+        "purpose": "Display success/error messages",
+        "props": [
+          "message",
+          "type",
+          "duration",
+          "onClose"
+        ]
+      }
+    ],
+    "layout": {
+      "has_header": false,
+      "has_footer": false,
+      "has_sidebar": true,
+      "max_width": "full",
+      "spacing": "spacious",
+      "footer_links": []
+    }
+  },
+  "backend": {
+    "requires_backend": true,
+    "apis": [
+      {
+        "endpoint": "/api/auth/signup",
+        "method": "POST",
+        "purpose": "Register new user with hashed password",
+        "request_body": {
+          "email": "string",
+          "name": "string",
+          "password": "string"
+        },
+        "response": {
+          "message": "string",
+          "success": "boolean",
+          "userId": "string"
+        },
+        "auth": false,
+        "used_by": [
+          "signUp"
+        ]
+      },
+      {
+        "endpoint": "/api/auth/login",
+        "method": "POST",
+        "purpose": "Authenticate user and return JWT token",
+        "request_body": {
+          "email": "string",
+          "password": "string"
+        },
+        "response": {
+          "success": "boolean",
+          "token": "string",
+          "user": {
+            "email": "string",
+            "id": "string",
+            "name": "string"
+          }
+        },
+        "auth": false,
+        "used_by": [
+          "login"
+        ]
+      },
+      {
+        "endpoint": "/api/user/profile",
+        "method": "GET",
+        "purpose": "Get current user profile information",
+        "request_body": {},
+        "response": {
+          "success": "boolean",
+          "user": {
+            "createdAt": "date",
+            "email": "string",
+            "id": "string",
+            "name": "string"
+          }
+        },
+        "auth": true,
+        "used_by": [
+          "dashboard",
+          "settings"
+        ]
+      },
+      {
+        "endpoint": "/api/user/profile",
+        "method": "PUT",
+        "purpose": "Update user profile information",
+        "request_body": {
+          "name": "string"
+        },
+        "response": {
+          "message": "string",
+          "success": "boolean",
+          "user": {
+            "email": "string",
+            "id": "string",
+            "name": "string"
+          }
+        },
+        "auth": true,
+        "used_by": [
+          "settings"
+        ]
+      },
+      {
+        "endpoint": "/api/user/history",
+        "method": "GET",
+        "purpose": "Get user's learning history",
+        "request_body": {},
+        "response": {
+          "history": [
+            {
+              "createdAt": "date",
+              "id": "string",
+              "query": "string",
+              "response": "string",
+              "type": "string"
+            }
+          ],
+          "success": "boolean"
+        },
+        "auth": true,
+        "used_by": [
+          "dashboard"
+        ]
+      },
+      {
+        "endpoint": "/api/ai/explain",
+        "method": "POST",
+        "purpose": "Generate AI text explanation for ML topic",
+        "request_body": {
+          "difficulty": "string",
+          "topic": "string"
+        },
+        "response": {
+          "difficulty": "string",
+          "explanation": "string",
+          "success": "boolean",
+          "topic": "string"
+        },
+        "auth": true,
+        "used_by": [
+          "textExplanation"
+        ]
+      },
+      {
+        "endpoint": "/api/ai/code",
+        "method": "POST",
+        "purpose": "Generate Python ML code with comments and dependencies",
+        "request_body": {
+          "problem": "string",
+          "requirements": "string"
+        },
+        "response": {
+          "code": "string",
+          "dependencies": [
+            "string"
+          ],
+          "explanation": "string",
+          "success": "boolean"
+        },
+        "auth": true,
+        "used_by": [
+          "codeGeneration"
+        ]
+      },
+      {
+        "endpoint": "/api/ai/audio",
+        "method": "POST",
+        "purpose": "Convert text to speech for audio learning",
+        "request_body": {
+          "text": "string",
+          "voice": "string"
+        },
+        "response": {
+          "audioUrl": "string",
+          "duration": "number",
+          "success": "boolean"
+        },
+        "auth": true,
+        "used_by": [
+          "audioLearning"
+        ]
+      },
+      {
+        "endpoint": "/api/ai/image",
+        "method": "POST",
+        "purpose": "Generate ML diagrams and flowcharts",
+        "request_body": {
+          "concept": "string",
+          "diagramType": "string"
+        },
+        "response": {
+          "concept": "string",
+          "diagramType": "string",
+          "imageUrl": "string",
+          "success": "boolean"
+        },
+        "auth": true,
+        "used_by": [
+          "imageVisualization"
+        ]
+      }
+    ],
+    "database": {
+      "models": [
+        {
+          "model_name": "user",
+          "fields": {
+            "createdAt": "date",
+            "email": "string",
+            "name": "string",
+            "password": "string"
+          },
+          "relationships": [
+            "User hasMany History"
+          ],
+          "indexes": [
+            "email"
+          ]
+        },
+        {
+          "model_name": "history",
+          "fields": {
+            "createdAt": "date",
+            "query": "string",
+            "response": "string",
+            "type": "string",
+            "userId": "string"
+          },
+          "relationships": [
+            "History belongsTo User"
+          ],
+          "indexes": [
+            "userId",
+            "createdAt"
+          ]
+        }
+      ]
+    },
+    "authentication": {
+      "required": true,
+      "type": "jwt",
+      "providers": [
+        "email"
+      ],
+      "protected_apis": [
+        "/api/user/profile",
+        "/api/user/history",
+        "/api/ai/explain",
+        "/api/ai/code",
+        "/api/ai/audio",
+        "/api/ai/image"
+      ]
+    },
+    "external_apis": [
+      {
+        "name": "Google Gemini API",
+        "purpose": "Generate AI content for text explanations, code, and image descriptions",
+        "required": true
+      },
+      {
+        "name": "Text-to-Speech API",
+        "purpose": "Convert generated text explanations to audio format",
+        "required": true
+      }
+    ],
+    "file_storage": {
+      "required": true,
+      "types": [
+        "audio",
+        "images"
+      ],
+      "max_size": "10MB"
+    }
+  },
+  "technical_specs": {
+    "frontend": {
+      "framework": "React",
+      "routing": "react-router-dom",
+      "styling": "Tailwind CSS",
+      "state_management": "React Context",
+      "animation": "Framer Motion",
+      "dependencies": [
+        "react@^18.2.0",
+        "react-dom@^18.2.0",
+        "react-router-dom@^6.15.0",
+        "framer-motion",
+        "lucide-react",
+        "clsx",
+        "tailwind-merge",
+        "axios",
+        "js-cookie",
+        "react-hot-toast",
+        "react-syntax-highlighter",
+        "@heroicons/react"
+      ]
+    },
+    "backend": {
+      "framework": "Standard Library",
+      "database": "PostgreSQL",
+      "orm": "GORM",
+      "auth": "JWT",
+      "dependencies": [
+        "github.com/golang-jwt/jwt/v5",
+        "github.com/gorilla/mux",
+        "github.com/rs/cors",
+        "gorm.io/driver/postgres",
+        "gorm.io/gorm",
+        "golang.org/x/crypto/bcrypt",
+        "github.com/joho/godotenv"
+      ]
+    }
+  }
+}

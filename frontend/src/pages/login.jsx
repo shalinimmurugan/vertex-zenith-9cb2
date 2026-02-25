@@ -28,8 +28,8 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const e = validate();
-    if (Object.keys(e).length) return setErrors(e);
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length) return setErrors(validationErrors);
     setLoading(true);
     // TODO: connect API endpoint using src/config/api.js
     // const res = await fetch(`${API_BASE_URL}${API_ENDPOINTS.LOGIN}`, { method: 'POST', body: JSON.stringify(form) });

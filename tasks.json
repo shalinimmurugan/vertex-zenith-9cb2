@@ -1,0 +1,377 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-02-25T01:59:36.794351725Z",
+  "total_tasks": 29,
+  "completed_tasks": 2,
+  "failed_tasks": 0,
+  "status": "in_progress",
+  "tasks": [
+    {
+      "id": "task_001",
+      "category": "database",
+      "type": "model",
+      "title": "User Model",
+      "description": "Define GORM model for users with fields: id (uuid primary key), name (string), email (string unique), password (string hashed), createdAt (timestamp). Add index on email. Establish has-many relationship with History model.",
+      "status": "pending",
+      "dependencies": [],
+      "file_path": "backend/models/user.go"
+    },
+    {
+      "id": "task_002",
+      "category": "database",
+      "type": "model",
+      "title": "History Model",
+      "description": "Define GORM model for learning history with fields: id (uuid primary key), userId (uuid foreign key), query (string), response (string), type (string enum: text|code|audio|image), createdAt (timestamp). Add indexes on userId and createdAt. Establish belongs-to relationship with User model.",
+      "status": "pending",
+      "dependencies": [
+        "task_001"
+      ],
+      "file_path": "backend/models/history.go"
+    },
+    {
+      "id": "task_003",
+      "category": "backend",
+      "type": "api",
+      "title": "POST /api/auth/signup",
+      "description": "Create API handler for user registration. Validate email format, password strength (8+ chars, uppercase, lowercase, number, special char), hash password using bcrypt, store user in database, return success message and userId. No authentication required.",
+      "status": "pending",
+      "dependencies": [
+        "task_001"
+      ],
+      "file_path": "backend/handlers/auth/signup.go"
+    },
+    {
+      "id": "task_004",
+      "category": "backend",
+      "type": "api",
+      "title": "POST /api/auth/login",
+      "description": "Create API handler for user login. Validate email and password against database, compare hashed password using bcrypt, generate JWT token with user claims, return token and user object. No authentication required.",
+      "status": "pending",
+      "dependencies": [
+        "task_001"
+      ],
+      "file_path": "backend/handlers/auth/login.go"
+    },
+    {
+      "id": "task_005",
+      "category": "backend",
+      "type": "api",
+      "title": "GET /api/user/profile",
+      "description": "Create API handler to retrieve current user profile. Extract userId from JWT token, query user by ID, return user object with id, name, email, createdAt. Requires JWT authentication.",
+      "status": "pending",
+      "dependencies": [
+        "task_001"
+      ],
+      "file_path": "backend/handlers/user/getProfile.go"
+    },
+    {
+      "id": "task_006",
+      "category": "backend",
+      "type": "api",
+      "title": "PUT /api/user/profile",
+      "description": "Create API handler to update user profile. Extract userId from JWT token, validate name field, update user record, return updated user object. Requires JWT authentication.",
+      "status": "pending",
+      "dependencies": [
+        "task_001"
+      ],
+      "file_path": "backend/handlers/user/updateProfile.go"
+    },
+    {
+      "id": "task_007",
+      "category": "backend",
+      "type": "api",
+      "title": "GET /api/user/history",
+      "description": "Create API handler to retrieve user's learning history. Extract userId from JWT token, query history records by userId ordered by createdAt descending, return array of history items with id, query, response, type, createdAt. Requires JWT authentication.",
+      "status": "pending",
+      "dependencies": [
+        "task_002"
+      ],
+      "file_path": "backend/handlers/user/getHistory.go"
+    },
+    {
+      "id": "task_008",
+      "category": "backend",
+      "type": "api",
+      "title": "POST /api/ai/explain",
+      "description": "Create API handler for AI text explanations. Extract userId from JWT token, validate topic and difficulty (beginner|intermediate|advanced), call Google Gemini API to generate ML explanation, save to history, return explanation with difficulty and topic. Requires JWT authentication.",
+      "status": "pending",
+      "dependencies": [
+        "task_002"
+      ],
+      "file_path": "backend/handlers/ai/explain.go"
+    },
+    {
+      "id": "task_009",
+      "category": "backend",
+      "type": "api",
+      "title": "POST /api/ai/code",
+      "description": "Create API handler for AI code generation. Extract userId from JWT token, validate problem description, call Google Gemini API to generate Python ML code with comments and dependencies, save to history, return code, dependencies list, and explanation. Requires JWT authentication.",
+      "status": "pending",
+      "dependencies": [
+        "task_002"
+      ],
+      "file_path": "backend/handlers/ai/code.go"
+    },
+    {
+      "id": "task_010",
+      "category": "backend",
+      "type": "api",
+      "title": "POST /api/ai/audio",
+      "description": "Create API handler for text-to-speech conversion. Extract userId from JWT token, validate text and voice selection, call TTS API to generate audio file, upload to file storage, save to history, return audio URL and duration. Requires JWT authentication.",
+      "status": "pending",
+      "dependencies": [
+        "task_002"
+      ],
+      "file_path": "backend/handlers/ai/audio.go"
+    },
+    {
+      "id": "task_011",
+      "category": "backend",
+      "type": "api",
+      "title": "POST /api/ai/image",
+      "description": "Create API handler for AI image generation. Extract userId from JWT token, validate concept and diagramType (flowchart|architecture|data-flow), call Google Gemini API to generate diagram description, create image using diagram library, upload to file storage, save to history, return image URL. Requires JWT authentication.",
+      "status": "pending",
+      "dependencies": [
+        "task_002"
+      ],
+      "file_path": "backend/handlers/ai/image.go"
+    },
+    {
+      "id": "task_012",
+      "category": "frontend",
+      "type": "component",
+      "title": "Sidebar Component",
+      "description": "Create reusable sidebar navigation component with user profile section, menu items for dashboard, text, code, audio, visual, settings, about pages, logout button. Props: user object, activeRoute string, onLogout function. Use glassmorphism design with dark theme, Inter font, accent colors.",
+      "status": "pending",
+      "dependencies": [],
+      "file_path": "frontend/src/components/sidebar.jsx"
+    },
+    {
+      "id": "task_013",
+      "category": "frontend",
+      "type": "component",
+      "title": "StatsCard Component",
+      "description": "Create reusable stats card component with glassmorphism effect for displaying metrics. Props: title string, value string, icon ReactNode, color string. Use Tailwind classes for dark gradient background, blur effects, rounded corners, subtle shadows.",
+      "status": "pending",
+      "dependencies": [],
+      "file_path": "frontend/src/components/statsCard.jsx"
+    },
+    {
+      "id": "task_014",
+      "category": "frontend",
+      "type": "component",
+      "title": "LearningModuleCard Component",
+      "description": "Create reusable glassmorphism card component for learning modules. Props: title string, description string, icon ReactNode, route string, color string. Use hover effects with Framer Motion, gradient backgrounds, click navigation.",
+      "status": "pending",
+      "dependencies": [],
+      "file_path": "frontend/src/components/learningModuleCard.jsx"
+    },
+    {
+      "id": "task_015",
+      "category": "frontend",
+      "type": "component",
+      "title": "AiContentDisplay Component",
+      "description": "Create reusable component for displaying AI-generated content with typing animation. Props: content string, isLoading boolean, contentType string (text|code|audio|image). Use Framer Motion for typing effect, syntax highlighting for code, audio player for audio, image display for visuals.",
+      "status": "pending",
+      "dependencies": [],
+      "file_path": "frontend/src/components/aiContentDisplay.jsx"
+    },
+    {
+      "id": "task_016",
+      "category": "frontend",
+      "type": "component",
+      "title": "ExportOptions Component",
+      "description": "Create reusable export functionality component. Props: content string, availableFormats array, onExport function. Support PDF, TXT, PNG, SVG formats. Use dropdown menu with icons, download functionality, loading states.",
+      "status": "pending",
+      "dependencies": [],
+      "file_path": "frontend/src/components/exportOptions.jsx"
+    },
+    {
+      "id": "task_017",
+      "category": "frontend",
+      "type": "component",
+      "title": "LoadingSpinner Component",
+      "description": "Create reusable loading animation component for AI processing states. Props: size string (sm|md|lg), color string. Use Framer Motion for energetic animation, circular spinner with accent color, pulse effects.",
+      "status": "pending",
+      "dependencies": [],
+      "file_path": "frontend/src/components/loadingSpinner.jsx"
+    },
+    {
+      "id": "task_018",
+      "category": "frontend",
+      "type": "component",
+      "title": "ToastNotification Component",
+      "description": "Create reusable toast notification component for success/error messages. Props: message string, type string (success|error), duration number, onClose function. Use react-hot-toast integration, slide animations, dark theme styling.",
+      "status": "pending",
+      "dependencies": [],
+      "file_path": "frontend/src/components/toastNotification.jsx"
+    },
+    {
+      "id": "task_019",
+      "category": "frontend",
+      "type": "page",
+      "title": "Home Page",
+      "description": "Create landing page with hero section featuring dark gradient background and animated text 'Learn ML with AI', call-to-action buttons for signup/login. Features section with 4 glassmorphism cards for learning modalities. How It Works section with step-by-step process. CTA section encouraging sign-up. Use Framer Motion for scroll animations.",
+      "status": "completed",
+      "dependencies": [
+        "task_012",
+        "task_014",
+        "task_018"
+      ],
+      "file_path": "frontend/src/pages/home.jsx",
+      "started_at": "2026-02-25T02:04:48.546397289Z",
+      "completed_at": "2026-02-25T02:05:20.69015184Z"
+    },
+    {
+      "id": "task_020",
+      "category": "frontend",
+      "type": "page",
+      "title": "SignUp Page",
+      "description": "Create dark-themed registration page with form containing name, email, password, confirm password fields. Real-time password strength indicator showing requirements (8+ chars, uppercase, lowercase, number, special char). Form validation with error messages. Link to login page. Integrate with POST /api/auth/signup API.",
+      "status": "pending",
+      "dependencies": [
+        "task_018"
+      ],
+      "file_path": "frontend/src/pages/signUp.jsx"
+    },
+    {
+      "id": "task_021",
+      "category": "frontend",
+      "type": "page",
+      "title": "Login Page",
+      "description": "Create dark-themed login page with email and password fields. Remember me checkbox. Forgot password link. Login button with loading state. Link to sign up page. Error handling for invalid credentials. Integrate with POST /api/auth/login API.",
+      "status": "pending",
+      "dependencies": [
+        "task_018"
+      ],
+      "file_path": "frontend/src/pages/login.jsx"
+    },
+    {
+      "id": "task_022",
+      "category": "frontend",
+      "type": "page",
+      "title": "Dashboard Page",
+      "description": "Create main learning hub with sidebar navigation. Top stats bar showing 4+ learning modalities, Gemini 2.0 AI model, 3 depth levels, 5+ export formats using StatsCard component. Four main glassmorphism cards for Text Explanation, Code Generation, Audio Learning, Image Visualization using LearningModuleCard. Recent learning history section. Fetch data from GET /api/user/profile and GET /api/user/history APIs.",
+      "status": "pending",
+      "dependencies": [
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_018"
+      ],
+      "file_path": "frontend/src/pages/dashboard.jsx"
+    },
+    {
+      "id": "task_023",
+      "category": "frontend",
+      "type": "page",
+      "title": "TextExplanation Page",
+      "description": "Create AI text explanation page with input field for ML topic, difficulty selector buttons (Beginner/Intermediate/Advanced), AI response area with structured explanation using AiContentDisplay component. Export buttons for PDF/TXT using ExportOptions. Save to history functionality. Typing animation effect. Integrate with POST /api/ai/explain API.",
+      "status": "pending",
+      "dependencies": [
+        "task_012",
+        "task_015",
+        "task_016",
+        "task_017",
+        "task_018"
+      ],
+      "file_path": "frontend/src/pages/textExplanation.jsx"
+    },
+    {
+      "id": "task_024",
+      "category": "frontend",
+      "type": "page",
+      "title": "CodeGeneration Page",
+      "description": "Create code generation page with text area for describing ML problem, code display area with syntax highlighting using AiContentDisplay, include comments, dependencies list, execution steps. Download code button using ExportOptions. Copy to clipboard functionality. Save to history. Integrate with POST /api/ai/code API.",
+      "status": "pending",
+      "dependencies": [
+        "task_012",
+        "task_015",
+        "task_016",
+        "task_017",
+        "task_018"
+      ],
+      "file_path": "frontend/src/pages/codeGeneration.jsx"
+    },
+    {
+      "id": "task_025",
+      "category": "frontend",
+      "type": "page",
+      "title": "AudioLearning Page",
+      "description": "Create audio learning page with text input area for ML topic, voice selection dropdown (male/female), generate audio button. Audio player with play/pause controls using AiContentDisplay. Download audio button using ExportOptions. Waveform visualization during playback. Integrate with POST /api/ai/audio API.",
+      "status": "pending",
+      "dependencies": [
+        "task_012",
+        "task_015",
+        "task_016",
+        "task_017",
+        "task_018"
+      ],
+      "file_path": "frontend/src/pages/audioLearning.jsx"
+    },
+    {
+      "id": "task_026",
+      "category": "frontend",
+      "type": "page",
+      "title": "ImageVisualization Page",
+      "description": "Create image visualization page with input field for ML concept, diagram type selector (flowchart/architecture/data-flow), generated image display area using AiContentDisplay. Download image button (PNG/SVG) using ExportOptions. Image gallery of previous generations. Zoom functionality for detailed view. Integrate with POST /api/ai/image API.",
+      "status": "pending",
+      "dependencies": [
+        "task_012",
+        "task_015",
+        "task_016",
+        "task_017",
+        "task_018"
+      ],
+      "file_path": "frontend/src/pages/imageVisualization.jsx"
+    },
+    {
+      "id": "task_027",
+      "category": "frontend",
+      "type": "page",
+      "title": "Settings Page",
+      "description": "Create settings page displaying user name and email from GET /api/user/profile. Preferences for default difficulty level, voice selection, export format. Change password option. Delete account functionality. Logout button. Update profile using PUT /api/user/profile API.",
+      "status": "pending",
+      "dependencies": [
+        "task_012",
+        "task_018"
+      ],
+      "file_path": "frontend/src/pages/settings.jsx"
+    },
+    {
+      "id": "task_028",
+      "category": "frontend",
+      "type": "page",
+      "title": "About Page",
+      "description": "Create about page with platform mission statement. Features overview with 4 learning modalities. Technology stack information including React, Go, PostgreSQL, Gemini API. Team members section. Contact information. Link to documentation and support. Use sidebar navigation.",
+      "status": "pending",
+      "dependencies": [
+        "task_012"
+      ],
+      "file_path": "frontend/src/pages/about.jsx"
+    },
+    {
+      "id": "task_029",
+      "category": "frontend",
+      "type": "page",
+      "title": "App.jsx",
+      "description": "Create main App component with React Router setup. Define routes: / (home), /signup (signUp), /login (login), /dashboard (dashboard), /learn/text (textExplanation), /learn/code (codeGeneration), /learn/audio (audioLearning), /learn/visual (imageVisualization), /settings (settings), /about (about). Implement route protection for authenticated pages. Include AuthContext for user state management. Integrate all backend APIs: POST /api/auth/signup, POST /api/auth/login, GET /api/user/profile, PUT /api/user/profile, GET /api/user/history, POST /api/ai/explain, POST /api/ai/code, POST /api/ai/audio, POST /api/ai/image. Reference database models: User (id, name, email, password, createdAt), History (id, userId, query, response, type, createdAt). Apply dark theme with Inter font, glassmorphism effects, energetic animations.",
+      "status": "completed",
+      "dependencies": [
+        "task_019",
+        "task_020",
+        "task_021",
+        "task_022",
+        "task_023",
+        "task_024",
+        "task_025",
+        "task_026",
+        "task_027",
+        "task_028"
+      ],
+      "file_path": "frontend/src/App.jsx",
+      "started_at": "2026-02-25T02:05:20.8472586Z",
+      "completed_at": "2026-02-25T02:05:27.654433512Z"
+    }
+  ]
+}
